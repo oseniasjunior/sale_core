@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-puwbv&c#9j5%hadq=14#23+du=w0a0z^k414_z3_*6whyda0#f
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'core.apps.CoreConfig',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -48,6 +49,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'sale.urls'
@@ -145,4 +147,12 @@ LOGGING = {
             'handlers': ['console'],
         }
     }
+}
+
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_METHODS = default_methods
+
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'COERCE_DECIMAL_TO_STRING': False
 }
