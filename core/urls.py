@@ -6,5 +6,6 @@ router.register('state', viewsets.StateViewSet)
 router.register('marital_status', viewsets.MaritalStatusViewSet)
 router.register('department', viewsets.DepartmentViewSet)
 router.register('zone', viewsets.ZoneViewSet)
+router.register('employee', viewsets.EmployeeViewSet)
 
 urlpatterns = router.urls

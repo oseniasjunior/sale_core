@@ -3,8 +3,8 @@ from django.dispatch import receiver
 from core import models
 
 
-# @receiver(post_save, sender=models.State, dispatch_uid='create_file')
-# def create_file(**kwargs):
-#     instance: models.State = kwargs.get('instance')
-#     with open(f'c:\\tmp\\{instance.id}', 'w+') as file:
-#         file.write(f'{instance.name} - {instance.abbreviation}')
+@receiver(post_save, sender=models.State, dispatch_uid='create_file')
+def create_file(**kwargs):
+    state = kwargs.get('instance')
+    with open(f'c:\\tmp\\{state.id}.txt', 'w+') as file:
+        file.write(f'{state.name} - {state.abbreviation}')
