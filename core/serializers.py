@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from core import models, serializers_results
+from rest_flex_fields import FlexFieldsModelSerializer
 
 
 class CitySerializer(serializers.ModelSerializer):
@@ -22,14 +23,24 @@ class MaritalStatusSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class EmployeeSerializer(serializers.ModelSerializer):
+class DepartmentLightSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Department
+        fields = ['id', 'name']
+
+
+class EmployeeSerializer(FlexFieldsModelSerializer, serializers.ModelSerializer):
     class Meta:
         model = models.Employee
         fields = '__all__'
 
+    expandable_fields = {
+        'department': ('core.DepartmentSerializer', {'source': 'department', 'fields': ['id', 'name']})
+    }
 
-class DepartmentSerializer(serializers.ModelSerializer):
-    employees = serializers_results.EmployeesSerializerResult(source='employee_set', many=True, read_only=True)
+
+class DepartmentSerializer(FlexFieldsModelSerializer, serializers.ModelSerializer):
+    # employees = serializers_results.EmployeesSerializerResult(source='employee_set', many=True, read_only=True)
 
     class Meta:
         model = models.Department

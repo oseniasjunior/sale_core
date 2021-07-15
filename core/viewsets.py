@@ -2,13 +2,18 @@ from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
-from core import models, serializers, queries, serializers_results, filters
+from core import models, serializers, queries, serializers_results, filters, tasks
 
 
 class StateViewSet(viewsets.ModelViewSet):
     queryset = models.State.objects.all()
     serializer_class = serializers.StateSerializer
     filter_class = filters.StateFilter
+
+    def create(self, request, *args, **kwargs):
+        instance = super(StateViewSet, self).create(request, *args, **kwargs)
+        tasks.create_file.apply_async([instance.data.get('id')])
+        return instance
 
 
 class MaritalStatusViewSet(viewsets.ModelViewSet):
@@ -43,3 +48,7 @@ class EmployeeViewSet(viewsets.ModelViewSet):
     queryset = models.Employee.objects.all()
     serializer_class = serializers.EmployeeSerializer
     filter_class = filters.EmployeeFilter
+
+    # def list(self, request, *args, **kwargs):
+    #     self.queryset = self.queryset.select_related('department')
+    #     return super(EmployeeViewSet, self).list(request, *args, **kwargs)

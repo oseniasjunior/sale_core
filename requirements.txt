@@ -23,6 +23,7 @@ Django==3.2.5
 django-cors-headers==3.7.0
 django-filter==2.4.0
 djangorestframework==3.12.4
+drf-flex-fields==0.1.8
 gevent==21.1.2
 greenlet==1.1.0
 hiredis==2.0.0
